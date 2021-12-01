@@ -1,0 +1,25 @@
+kind create cluster --name mycluster
+#command to create cluster with name
+
+kind create cluster --config=cluster-extraports.yaml
+#command to create cluster using config file
+
+kubectl cluster-info --context kind-mycluster
+#command to show cluster info
+
+kubectl cluster-info dump
+
+kind delete cluster --name kind
+#command to remove cluster name kind
+
+kind get clusters
+#command to show clusters
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+#manifest to install nginx-ingress-controler in kind 
+
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s
+#ingress is all setup. Wait until is ready to process requests running
